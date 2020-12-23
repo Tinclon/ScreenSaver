@@ -1,7 +1,7 @@
 {
   "short_name": "Screen Saver",
   "name": "Screen Saver",
-  "start_url": "ScreenSaver.html",
+  "start_url": "./ScreenSaver.html",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#000000"
