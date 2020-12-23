@@ -126,8 +126,8 @@ SOURCES[SOURCE_CLINTON2] = () => {
     const NUM_SLICES = 50;
     const RECT_WIDTH = 10;
     const RECT_HEIGHT = 10;
-    const MIN_SPEED = 2.8;
-    const MAX_SPEED = 8.0;
+    const MIN_SPEED = 1.0;
+    const MAX_SPEED = 5.0;
 
     const points = [];
     fillData = (numPoints) => {
