@@ -13,7 +13,8 @@ const begin = () => {
     frame(context, canvas, paintFrame)();
 }
 
-const BORDER = 10;
+const BORDER = 0;
+const BORDER_COLOR = "#000000";
 const FRAME_DELAY = 10;
 const MIN_X = () => 0 + BORDER;
 const MIN_Y = () => 0 + BORDER;
@@ -55,7 +56,7 @@ frame = (context, canvas, paintFrame) => () => {
     context.lineWidth = 2;
 
     // Draw a border
-    context.strokeStyle = "#AAAAAA";
+    context.strokeStyle = BORDER_COLOR;
     context.strokeRect(MIN_X(), MIN_Y(), MAX_X() - BORDER, MAX_Y() - BORDER);
 
     paintFrame(context);
