@@ -27,12 +27,12 @@ const RANDOM_Y_POINT = (height) => RANDOM(MAX_Y() - height * 2, MIN_Y() + height
 const RANDOM_SPEED = (min, max) => RANDOM(min, max);
 const RANDOM_COLOR = () => hslToHex(RANDOMINT(0, 360), 100, 50);
 const RANDOM_DIRECTION = () => RANDOMINT(0,1) === 0 ? 1 : -1;
-const SLICE_POINTS = (point1, point2, count) => {
-    const slices = [];
+const INTERPOLATE = (point1, point2, count) => {
+    const points = [];
     for (let i = 0 ; i < count ; i++) {
-        slices.push(point1 + i * (point2 - point1) / (count - 1));
+        points.push(point1 + i * (point2 - point1) / (count - 1));
     }
-    return slices;
+    return points;
 }
 
 const hslToHex = (h, s, l) => {
@@ -150,27 +150,27 @@ SOURCES[SOURCE_CLINTON2] = () => {
     fillData(NUM_BALLS);
 
     const paintFrame = context => {
-        const slicedPointsX1 = SLICE_POINTS(points[0].x.loc, points[1].x.loc, NUM_SLICES);
-        const slicedPointsY1 = SLICE_POINTS(points[0].y.loc, points[1].y.loc, NUM_SLICES);
-        const slicedPointsX2 = SLICE_POINTS(points[2].x.loc, points[3].x.loc, NUM_SLICES);
-        const slicedPointsY2 = SLICE_POINTS(points[2].y.loc, points[3].y.loc, NUM_SLICES);
+        const pointsX1 = INTERPOLATE(points[0].x.loc, points[1].x.loc, NUM_SLICES);
+        const pointsY1 = INTERPOLATE(points[0].y.loc, points[1].y.loc, NUM_SLICES);
+        const pointsX2 = INTERPOLATE(points[2].x.loc, points[3].x.loc, NUM_SLICES);
+        const pointsY2 = INTERPOLATE(points[2].y.loc, points[3].y.loc, NUM_SLICES);
 
-        for (let i = 0 ; i < slicedPointsX1.length ; i++) {
+        for (let i = 0 ; i < pointsX1.length ; i++) {
             // context.fillStyle = hslToHex(points[0].color, 100, 50);
-            // context.fillRect(slicedPointsX1[i], slicedPointsY1[i], RECT_WIDTH, RECT_HEIGHT);
+            // context.fillRect(pointsX1[i], pointsY1[i], RECT_WIDTH, RECT_HEIGHT);
 
             // context.fillStyle = hslToHex(points[3].color, 100, 50);
-            // context.fillRect(slicedPointsX2[i], slicedPointsY2[i], RECT_WIDTH, RECT_HEIGHT);
+            // context.fillRect(pointsX2[i], pointsY2[i], RECT_WIDTH, RECT_HEIGHT);
 
-            const grad = context.createLinearGradient(slicedPointsX1[i], slicedPointsY1[i], slicedPointsX2[i], slicedPointsY2[i]);
+            const grad = context.createLinearGradient(pointsX1[i], pointsY1[i], pointsX2[i], pointsY2[i]);
             grad.addColorStop(0, hslToHex(points[0].color, 100, 50));
             grad.addColorStop(1, hslToHex(points[3].color, 100, 50));
             context.strokeStyle = grad;
 
             context.lineWidth = 2;
             context.beginPath();
-            context.moveTo(slicedPointsX1[i], slicedPointsY1[i]);
-            context.lineTo(slicedPointsX2[i], slicedPointsY2[i]);
+            context.moveTo(pointsX1[i], pointsY1[i]);
+            context.lineTo(pointsX2[i], pointsY2[i]);
             context.stroke();
         }
 
